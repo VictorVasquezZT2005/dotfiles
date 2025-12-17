@@ -20,11 +20,16 @@ if [[ $confirm != "s" && $confirm != "S" ]]; then
     exit 1
 fi
 
+# --- Preguntar Nombre Completo ---
+echo -e "${BLUE}Configuración de usuario:${NC}"
+read -p "Introduce tu nombre completo para el sistema (Ej: Victor Vasquez): " full_name
+sudo chfn -f "$full_name" $(whoami)
+
 # 1. Actualización e Instalación de Paquetes
 echo -e "${GREEN}[1/8] Instalando dependencias y herramientas...${NC}"
 sudo apt update
 sudo apt install -y pipewire pipewire-audio pipewire-alsa pipewire-jack wireplumber \
-brightnessctl bluez tlp tlp-rdw polybar feh thunar xfce4-terminal mpv rofi htop \
+brightnessctl bluez power-profiles-daemon polybar feh thunar xfce4-terminal mpv rofi htop \
 fastfetch git wget unzip build-essential scrot
 
 # Configuración de Pipewire
@@ -41,14 +46,14 @@ sudo apt install -y /tmp/google-chrome.deb
 
 # 3. Instalación de Temas
 echo -e "${GREEN}[3/8] Instalando Temas (Tela Icons y Dracula GTK)...${NC}"
-# Iconos
 git clone https://github.com/vinceliuice/Tela-icon-theme.git /tmp/tela-icons
 cd /tmp/tela-icons && sudo ./install.sh && cd -
-# GTK Dracula
+
 wget https://github.com/dracula/gtk/archive/master.zip -O /tmp/dracula.zip
 unzip /tmp/dracula.zip -d /tmp/
 sudo mkdir -p /usr/share/themes
-sudo mv /tmp/gtk-master /usr/share/themes/Dracula
+# Intentar mover con los dos nombres posibles que genera GitHub
+sudo mv /tmp/dracula-gtk-master /usr/share/themes/Dracula 2>/dev/null || sudo mv /tmp/gtk-master /usr/share/themes/Dracula
 
 # 4. Configuración de GRUB (Interactivo)
 echo -e "${GREEN}[4/8] Configurando GRUB...${NC}"
@@ -109,7 +114,13 @@ EOT
 
 # 8. Finalización
 chmod +x ~/.config/polybar/*.sh
-sudo systemctl enable tlp
+sudo systemctl enable power-profiles-daemon
+sudo systemctl start power-profiles-daemon
+
 echo -e "${BLUE}==========================================${NC}"
-echo -e "${GREEN}¡Todo listo! Reinicia para ver los cambios.${NC}"
+echo -e "${GREEN}¡Todo listo, $full_name!${NC}"
+echo -e "${RED}El sistema se reiniciará en 10 segundos...${NC}"
 echo -e "${BLUE}==========================================${NC}"
+
+sleep 10
+sudo reboot
