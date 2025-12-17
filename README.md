@@ -21,5 +21,5 @@ Este repositorio contiene mi configuración personal para un entorno de escritor
 
 Para instalar todo el entorno de VictorZT2005, ejecuta el siguiente comando en tu terminal:
 
-```bash
-/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/install.sh](https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/install.sh))"
+
+/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/VictorVasquezZT2005/dotfiles/main/install.sh](https://raw.githubusercontent.com/VictorVasquezZT2005/dotfiles/main/install.sh))"
