@@ -6,7 +6,7 @@ Este repositorio contiene mi configuración personal para un entorno de escritor
 ![vvasq-theme](https://img.shields.io/badge/Theme-Dracula-purple?style=for-the-badge)
 
 ## 📸 Vista Previa
-![Screenshot](img/2025-12-16-20:29:35-screenshot.png)
+![Screenshot](img/screenshot1.png)
 
 ## 📦 Componentes Principales
 * **Window Manager:** i3wm
