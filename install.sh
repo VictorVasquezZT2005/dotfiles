@@ -10,21 +10,21 @@ OS="$(uname -s)"
 case "$OS" in
     Linux)
         echo "Sistema Linux detectado."
-        if [ ! -f "install-linux.sh" ]; then
+        if [ ! -f "./install-linux.sh" ]; then
             echo "Error: install-linux.sh no encontrado."
             exit 1
         fi
-        chmod +x install-linux.sh
-        exec install-linux.sh
+        chmod +x ./install-linux.sh
+        exec ./install-linux.sh
         ;;
     OpenBSD)
         echo "Sistema OpenBSD detectado."
-        if [ ! -f "install-openbsd.sh" ]; then
+        if [ ! -f "./install-openbsd.sh" ]; then
             echo "Error: install-openbsd.sh no encontrado."
             exit 1
         fi
-        chmod +x install-openbsd.sh
-        exec install-openbsd.sh
+        chmod +x ./install-openbsd.sh
+        exec ./install-openbsd.sh
         ;;
     *)
         echo "Sistema no soportado: $OS"
