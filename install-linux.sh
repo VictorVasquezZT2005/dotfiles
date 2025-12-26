@@ -51,13 +51,14 @@ GPU_INFO=$(lspci | grep -E "VGA|3D")
 [[ "$CPU_VENDOR" == "GenuineIntel" ]] && CPU="INTEL"
 
 # ================= PAQUETES =================
-COMMON="pipewire wireplumber brightnessctl bluez polybar feh thunar mpv rofi htop fastfetch git wget unzip scrot"
+COMMON="pipewire wireplumber brightnessctl bluez polybar feh thunar mpv rofi htop fastfetch git wget unzip scrot lightdm"
 
 case "$DISTRO" in
     debian|ubuntu)
         PM="sudo apt install -y"
         UPD="sudo apt update"
         AUDIO="pipewire-audio pipewire-alsa pipewire-jack"
+        GREETER="lightdm-gtk-greeter"
         HW=""
         [[ "$CPU" == "INTEL" ]] && HW="intel-microcode"
         [[ "$CPU" == "AMD" ]] && HW="mesa-vulkan-drivers"
@@ -66,18 +67,21 @@ case "$DISTRO" in
         PM="sudo dnf install -y"
         UPD="sudo dnf check-update || true"
         AUDIO="pipewire-pulseaudio"
+        GREETER="lightdm-gtk"
         HW="mesa-dri-drivers"
         ;;
     arch)
         PM="sudo pacman -S --noconfirm --needed"
         UPD="sudo pacman -Sy"
         AUDIO="pipewire-pulse"
+        GREETER="lightdm-gtk-greeter"
         HW="mesa"
         ;;
     opensuse*)
         PM="sudo zypper install -y"
         UPD="sudo zypper refresh"
         AUDIO="pipewire-pulseaudio"
+        GREETER="lightdm-gtk-greeter"
         HW="Mesa"
         ;;
     *)
@@ -88,7 +92,10 @@ esac
 
 # ================= INSTALACIÓN =================
 $UPD
-$PM $COMMON $AUDIO $HW
+$PM $COMMON $AUDIO $HW $GREETER
+
+# ================= LIGHTDM =================
+sudo systemctl enable lightdm
 
 # ================= PIPEWIRE =================
 systemctl --user enable pipewire wireplumber pipewire-pulse
